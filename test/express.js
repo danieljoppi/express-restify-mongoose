@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express'),
 	bodyParser = require('body-parser'),
 	methodOverride = require('method-override'),
@@ -15,9 +17,9 @@ function ExpressCustomOutputFunction() {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(methodOverride());
-    app.outputFn = function(res, result) {
+    app.outputFn = function(res, result, statusCode) {
         res.type('json');
-        res.send(JSON.stringify(result));
+        res.status(statusCode || 200).send(JSON.stringify(result));
     };
     return app;
 }
